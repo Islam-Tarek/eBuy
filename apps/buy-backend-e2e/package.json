@@ -1,0 +1,26 @@
+{
+  "name": "@buy/buy-backend-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@buy/buy-backend"
+    ],
+    "targets": {
+      "e2e": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "apps/buy-backend-e2e/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "dependsOn": [
+          "@buy/buy-backend:build",
+          "@buy/buy-backend:serve"
+        ]
+      }
+    }
+  }
+}
