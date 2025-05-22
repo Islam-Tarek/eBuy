@@ -11,11 +11,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_DIST")
 }
 
 model Product {
-  id            Int         @id @default(autoincrement())
+  id            String         @id @default(uuid())
   name          String
   description   String
   price         Float
@@ -41,11 +41,11 @@ model Order {
 model OrderItem {
   id           String  @id @default(uuid())
   orderId      String
-  productionId Int
+  productId    String
   quantity     Int
   price        Float
   order        Order   @relation(fields: [orderId], references: [id])
-  product      Product @relation(fields: [productionId], references: [id])
+  product      Product @relation(fields: [productId], references: [id])
 }
 
 enum OrderStatus {
