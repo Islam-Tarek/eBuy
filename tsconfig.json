@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/buy-backend"
+    },
+    {
+      "path": "./apps/buy-frontend-e2e"
     }
   ]
 }

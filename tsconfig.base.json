@@ -15,7 +15,8 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2022",
-    "customConditions": ["development"]
+    "target": "es2022"
+    // "declaration": false,
+    // "customConditions": ["development"],
   }
 }
