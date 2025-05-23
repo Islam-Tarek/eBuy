@@ -1,0 +1,9 @@
+{
+  "name": "buy-frontend-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/buy-frontend-e2e/src",
+  "implicitDependencies": ["buy-frontend"],
+  "// targets": "to see all targets run: nx show project buy-frontend-e2e --web",
+  "targets": {}
+}
