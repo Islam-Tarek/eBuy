@@ -76,15 +76,19 @@
     "@nestjs/common": "^11.1.1",
     "@nestjs/core": "^11.1.1",
     "@nestjs/graphql": "^13.1.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^11.1.1",
     "@ngrx/signals": "^19.2.0",
     "@prisma/client": "^6.8.2",
     "apollo-angular": "^10.0.3",
     "axios": "^1.6.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
     "express": "^4.21.2",
     "graphql": "^16.11.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "stripe": "^18.1.1",
     "zone.js": "~0.15.0"
   }
 }
