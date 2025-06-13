@@ -1,4 +1,5 @@
 import { InputType, Int, Field, Float } from '@nestjs/graphql';
+import { OrderStatus } from '@prisma/client';
 
 @InputType()
 export class OrderItemInput {
@@ -19,4 +20,11 @@ export class CreateOrderInput {
 
   @Field(() => Float)
   totalAmount!: number;
+}
+
+export interface CreateOrderServiceDto {
+  items: OrderItemInput[];
+  totalAmount: number;
+  userId?: string;
+  status?: OrderStatus;
 }
