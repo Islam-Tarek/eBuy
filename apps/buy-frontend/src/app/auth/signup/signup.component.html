@@ -1,0 +1,60 @@
+<div class="max-w-md mx-auto">
+  <div class="card bg-white shadow-lg rounded-lg">
+    <div class="card-body p-8">
+      <h2 class="card-title text-2xl font-bold text-[#232F3E] mb-6">Sign Up</h2>
+
+      <form (ngSubmit)="onSubmit()" #signupForm="ngForm" class="space-y-4">
+        <div class="form-control">
+          <label for="emailInput" class="label">
+            <span class="label-text text-[#232F3E] font-medium">Email</span>
+          </label>
+          <input
+            id="emailInput"
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+            class="input input-bordered bg-gray-50 border-gray-200 focus:border-[#FF9900] focus:ring-[#FF9900] text-[#232F3E]"
+          />
+        </div>
+
+        <div class="form-control">
+          <label for="passwordInput" class="label">
+            <span class="label-text text-[#232F3E] font-medium">Password</span>
+          </label>
+          <input
+            id="passwordInput"
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            minlength="6"
+            class="input input-bordered bg-gray-50 border-gray-200 focus:border-[#FF9900] focus:ring-[#FF9900] text-[#232F3E]"
+          />
+        </div>
+
+        <div class="form-control mt-6">
+          <button
+            type="submit"
+            class="btn bg-[#FF9900] hover:bg-[#FF9900]/80 text-white border-none"
+            [disabled]="!signupForm.form.valid"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+
+      <div class="divider text-gray-400 my-6">OR</div>
+
+      <button (click)="googleSignIn()" class="w-full flex items-center justify-center gap-2 px-4 py-2 border border-[#232F3E] text-[#232F3E] rounded-md hover:bg-[#232F3E] hover:text-white transition-colors">
+        <i class="fab fa-google"></i>
+        Continue with Google
+      </button>
+
+      <p class="text-center mt-6 text-[#232F3E]">
+        Already have an account?
+        <a routerLink="/auth/login" class="text-[#FF9900] hover:text-[#FF9900]/80 font-medium">Login</a>
+      </p>
+    </div>
+  </div>
+</div>
