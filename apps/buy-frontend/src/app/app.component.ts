@@ -6,8 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [RouterModule, HeaderComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'buy-frontend';
+  title = 'eBuy-frontend';
 }

@@ -13,6 +13,8 @@ import { OrdersModule } from './orders/orders.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'dist/schema.gql'),
+      path: 'graphql', // remove /api prefix since we'll add it globally
+      playground: true,
     }),
     ProductsModule,
     CheckoutModule,

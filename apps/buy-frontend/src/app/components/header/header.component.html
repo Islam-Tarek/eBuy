@@ -1,36 +1,52 @@
-<header class="bg-primary text-primary-content sticky top-0 z-50">
-  <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-    <h1 class="text-2xl font-bold">
-      <a class="w-full h-full block" routerLink="/">Buy</a>
-    </h1>
-    <nav>
-      <ul class="flex space-x-4 items-center">
-        <li><a routerLink="/" class="hover:underline">Home</a></li>
-        <li><a routerLink="/products" class="hover:underline">Products</a></li>
-        <li>
-          <a
-            routerLink="/cart"
-            class="cart-icon relative inline-flex"
-            [class.cart-bounce]="isCartBouncing()"
+<header class="bg-[#232F3E] text-white shadow-md">
+  <div class="container mx-auto px-4 py-3">
+    <div class="flex items-center justify-between">
+      <!-- Logo and Navigation -->
+      <div class="flex items-center space-x-8">
+        <a routerLink="/" class="text-2xl font-bold text-[#FF9900] hover:text-[#FF9900]/80 transition-colors">
+          eBuy
+        </a>
+        <nav class="hidden md:flex space-x-6">
+          <a routerLink="/" class="text-white hover:text-[#FF9900] transition-colors font-medium">Home</a>
+          <a routerLink="/products" class="text-white hover:text-[#FF9900] transition-colors font-medium">Products</a>
+          <a routerLink="/orders" class="text-white hover:text-[#FF9900] transition-colors font-medium">Orders</a>
+        </nav>
+      </div>
+
+      <!-- Cart and User -->
+      <div class="flex items-center space-x-4">
+        <a routerLink="/cart" class="cart-icon">
+          <i class="fas fa-shopping-cart text-xl"></i>
+          <span *ngIf="cartItemCount > 0" class="cart-count">{{ cartItemCount }}</span>
+        </a>
+        <ng-container *ngIf="currentUser$ | async as user">
+          <button 
+            (click)="toggleUserMenu()" 
+            (keydown.enter)="toggleUserMenu()"
+            class="bg-transparent border-none p-2 focus:outline-none focus:ring-2 focus:ring-[#FF9900] rounded-full"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            <div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+              <img
+                [src]="getUserPhotoUrl(currentUser$ | async)"
+                alt="User"
+                class="w-full h-full object-cover"
               />
-            </svg>
-            <span class="cart-count">{{ cartStore.totalItems() }}</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+            </div>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="(currentUser$ | async) === null">
+          <a routerLink="/auth/login" class="btn btn-primary bg-[#FF9900] hover:bg-[#FF9900]/80 text-white px-4 py-2 rounded-md font-medium transition-colors">Login</a>
+          <a routerLink="/auth/signup" class="btn btn-outline border-[#FF9900] text-[#FF9900] hover:bg-[#FF9900] hover:text-white px-4 py-2 rounded-md font-medium transition-colors">Sign Up</a>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </header>
+
+<!-- User Menu Dropdown -->
+<div *ngIf="showUserMenu" class="absolute right-4 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+  <a routerLink="/orders" class="block px-4 py-2 text-[#232F3E] hover:bg-gray-100 hover:text-[#FF9900]">My Orders</a>
+  <button (click)="logout()" class="block w-full text-left px-4 py-2 text-[#232F3E] hover:bg-gray-100 hover:text-[#FF9900]">
+    Logout
+  </button>
+</div>

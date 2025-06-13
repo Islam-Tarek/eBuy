@@ -1,4 +1,10 @@
-import { ObjectType, Field, ID, Float } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  ID,
+  Float,
+  registerEnumType,
+} from '@nestjs/graphql';
 import { OrderItem } from './order-item.entity';
 import { OrderStatus } from '@prisma/client';
 
@@ -25,3 +31,7 @@ export class Order {
   @Field(() => Date)
   updatedAt!: Date;
 }
+
+registerEnumType(OrderStatus, {
+  name: 'OrderStatus',
+});

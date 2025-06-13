@@ -48,3 +48,6 @@ test-output
 .github/instructions/nx.instructions.md
 
 .angular
+.env
+
+service-account.json

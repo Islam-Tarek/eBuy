@@ -1,0 +1,61 @@
+.input {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #232F3E;
+  transition: all 0.2s ease;
+
+  &:focus {
+    background-color: white;
+    border-color: #FF9900;
+    box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+    outline: none;
+  }
+
+  &:hover {
+    border-color: #FF9900;
+  }
+}
+
+// Style for the quantity input specifically
+input[type="number"] {
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    opacity: 1;
+    background: #f0f0f0;
+    height: 100%;
+    cursor: pointer;
+  }
+}
+
+.btn-circle {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  color: #232F3E;
+  font-size: 1.25rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #e6e6e6;
+    border-color: #FF9900;
+    color: #FF9900;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Style for the quantity display
+span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #232F3E;
+}

@@ -12,7 +12,6 @@ import { Product } from '@prisma/client';
   standalone: true,
   imports: [CommonModule, ProductCardComponent, FormsModule],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.scss',
 })
 export class ProductsComponent {
   searchTerm = '';
@@ -21,19 +20,26 @@ export class ProductsComponent {
   searchSubject = new Subject<string>();
 
   constructor() {
-    this.productStore.loadProducts();
+    // Load products only if they haven't been loaded yet
+    if (this.productStore.products().length === 0) {
+      this.productStore.loadProducts();
+    }
+
+    // Set up search with debounce
     afterNextRender(() => {
       this.searchSubject
         .pipe(debounceTime(500), distinctUntilChanged())
         .subscribe((term) => {
-          console.log({ term });
-          this.productStore.searchProducts(term);
+          if (term) {
+            this.productStore.searchProducts(term);
+          } else {
+            this.productStore.loadProducts();
+          }
         });
     });
   }
 
   onSearch(term: string) {
-    // console.log({ term });
     this.searchSubject.next(term);
   }
 

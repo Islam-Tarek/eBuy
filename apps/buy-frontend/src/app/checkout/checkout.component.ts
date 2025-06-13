@@ -7,7 +7,6 @@ import { StripeService } from '../services/stripe.service';
   selector: 'app-checkout',
   imports: [CommonModule],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.scss',
 })
 export class CheckoutComponent {
   cartStore = inject(CartStore);

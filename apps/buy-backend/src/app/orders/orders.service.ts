@@ -1,19 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrderInput } from './dto/create-order.input';
+import { CreateOrderServiceDto } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
 import { PrismaService } from '../prisma/prisma.service';
+import { DeleteOrderResp } from './dto/delete-order-resp';
+import { OrderStatus } from '@prisma/client';
 
 @Injectable()
 export class OrdersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  create(createOrderInput: CreateOrderInput) {
-    const { totalAmount, items } = createOrderInput;
-
+  create(createOrderInput: CreateOrderServiceDto) {
+    const { totalAmount, items, userId, status = 'PENDING' } = createOrderInput;
     return this.prisma.order.create({
       data: {
         totalAmount,
-        status: 'PENDING',
+        status,
         items: {
           create: items.map((item) => ({
             quantity: item.quantity,
@@ -25,6 +26,7 @@ export class OrdersService {
             },
           })),
         },
+        userId,
       },
       include: {
         items: {
@@ -37,7 +39,36 @@ export class OrdersService {
   }
 
   findAll() {
-    return `This action returns all orders`;
+    return this.prisma.order.findMany({
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+  }
+
+  findUserOrders(userId: string) {
+    return this.prisma.order.findMany({
+      where: {
+        userId,
+        status: {
+          not: 'PAYMENT_REQUIRED',
+        },
+      },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findOne(id: string) {
@@ -53,11 +84,66 @@ export class OrdersService {
     });
   }
 
-  update(id: number, updateOrderInput: UpdateOrderInput) {
-    return `This action updates a #${id} order`;
+  update(id: string, updateOrderInput: UpdateOrderInput) {
+    return this.prisma.order.update({
+      where: {
+        id,
+      },
+      data: {
+        ...updateOrderInput,
+      },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async removeUnpaid(id: string): Promise<DeleteOrderResp> {
+    const order = await this.prisma.order.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!order) {
+      return {
+        success: true,
+        orderId: id,
+      };
+    }
+    if (order.status === OrderStatus.PAYMENT_REQUIRED) {
+      await this.prisma.order.delete({
+        where: {
+          id,
+        },
+      });
+      return {
+        success: true,
+        orderId: id,
+      };
+    }
+
+    return {
+      success: false,
+      orderId: id,
+      error: `Order is not in ${OrderStatus.PAYMENT_REQUIRED} state`,
+    };
+  }
+
+  async updateStatus(id: string, status: OrderStatus) {
+    return this.prisma.order.update({
+      where: { id },
+      data: { status },
+      include: {
+        items: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
   }
 }

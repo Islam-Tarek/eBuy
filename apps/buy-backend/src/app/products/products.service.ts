@@ -17,8 +17,15 @@ export class ProductsService {
     });
   }
 
-  findAll() {
-    return this.prisma.product.findMany();
+  findAll(config: { featured?: boolean } = {}) {
+    return this.prisma.product.findMany({
+      where:
+        config.featured !== undefined
+          ? {
+              isFeatured: config.featured,
+            }
+          : undefined,
+    });
   }
 
   findOne(id: string) {

@@ -2,6 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartStore } from '../stores/cart.store';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
+import { Product } from '@prisma/client';
+
+type CartItem = Product & {
+  quantity: number;
+};
 
 @Component({
   selector: 'app-cart',
@@ -12,11 +18,28 @@ import { RouterLink } from '@angular/router';
 })
 export class CartComponent {
   cartStore = inject(CartStore);
-  updateQuantity(productId: string, event: Event) {
-    const target = event.target as HTMLInputElement;
-    const quantity = parseInt(target.value);
+  auth = inject(AuthService);
+
+  updateQuantity(id: string, event: Event) {
+    const input = event.target as HTMLInputElement;
+    const quantity = parseInt(input.value);
     if (quantity > 0) {
-      this.cartStore.updateQuantity(productId, quantity);
+      this.cartStore.updateQuantity(id, quantity);
+    } else {
+      const item = this.cartStore.items().find(item => item.id === id);
+      if (item) {
+        input.value = item.quantity.toString();
+      }
+    }
+  }
+
+  increaseQuantity(item: CartItem) {
+    this.cartStore.updateQuantity(item.id, item.quantity + 1);
+  }
+
+  decreaseQuantity(item: CartItem) {
+    if (item.quantity > 1) {
+      this.cartStore.updateQuantity(item.id, item.quantity - 1);
     }
   }
 }

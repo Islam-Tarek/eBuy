@@ -1,5 +1,5 @@
 export default {
-  displayName: 'buy-frontend',
+  displayName: 'eBuy-frontend',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory: '../../coverage/apps/buy-frontend',

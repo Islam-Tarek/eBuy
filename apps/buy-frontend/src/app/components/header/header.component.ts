@@ -1,31 +1,42 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CartStore } from '../../stores/cart.store';
-// import { timeout } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   cartStore = inject(CartStore);
-  previousCount = 0;
-  isCartBouncing = signal(false);
+  auth = inject(AuthService);
+  showUserMenu = false;
+  currentUser$ = this.auth.currentUser$;
 
-  constructor() {
-    effect(() => {
-      const currentCount = this.cartStore.totalItems();
-      if (currentCount && currentCount > this.previousCount) {
-        this.isCartBouncing.set(true);
+  get cartItemCount() {
+    return this.cartStore.totalItems();
+  }
 
-        setTimeout(() => {
-          this.isCartBouncing.set(false);
-        }, 1000);
-      }
-      this.previousCount = currentCount;
-    });
+  getUserPhotoUrl(user: any): string {
+    if (!user) return '';
+    if (user.photoURL) return user.photoURL;
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email?.split('@')[0] || 'User')}&background=FF9900&color=fff`;
+  }
+
+  toggleUserMenu() {
+    this.showUserMenu = !this.showUserMenu;
+  }
+
+  async logout() {
+    try {
+      await this.auth.logout();
+      this.showUserMenu = false;
+    } catch (err) {
+      console.error('logout error:', err);
+    }
   }
 }

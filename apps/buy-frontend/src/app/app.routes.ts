@@ -1,9 +1,14 @@
 import { Route } from '@angular/router';
+import { authGuard } from './auth/auth.guard';
 
 export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
+    redirectTo: 'home',
+  },
+  {
+    path: 'home',
     loadComponent: async () => {
       const mod = await import('./home/home.component');
       return mod.HomeComponent;
@@ -11,7 +16,6 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'products',
-    pathMatch: 'full',
     loadComponent: async () => {
       const mod = await import('./products/products.component');
       return mod.ProductsComponent;
@@ -19,7 +23,6 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'cart',
-    pathMatch: 'full',
     loadComponent: async () => {
       const mod = await import('./cart/cart.component');
       return mod.CartComponent;
@@ -27,31 +30,56 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'checkout',
-    pathMatch: 'full',
     loadComponent: async () => {
       const mod = await import('./checkout/checkout.component');
       return mod.CheckoutComponent;
     },
+    canActivate: [authGuard],
   },
   {
     path: 'checkout/cancel',
-    pathMatch: 'full',
     loadComponent: async () => {
       const mod = await import(
         './checkout/checkout-failure/checkout-failure.component'
       );
       return mod.CheckoutFailureComponent;
     },
+    canActivate: [authGuard],
   },
-
   {
     path: 'checkout/success',
-    pathMatch: 'full',
     loadComponent: async () => {
       const mod = await import(
         './checkout/checkout-success/checkout-success.component'
       );
       return mod.CheckoutSuccessComponent;
     },
+    canActivate: [authGuard],
+  },
+  {
+    path: 'auth/login',
+    loadComponent: () =>
+      import('./auth/login/login.component').then((c) => c.LoginComponent),
+  },
+  {
+    path: 'auth/signup',
+    loadComponent: () =>
+      import('./auth/signup/signup.component').then((c) => c.SignupComponent),
+  },
+  {
+    path: 'orders',
+    loadComponent: () =>
+      import('./orders/orders.component').then((c) => c.OrdersComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'orders/:id',
+    loadComponent: () =>
+      import('./order/order.component').then((c) => c.OrderComponent),
+    canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
   },
 ];
