@@ -110,14 +110,5 @@ STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
 
 ## 🎥 Demo
 
-Watch our platform demonstration:
+[▶️ Watch eBuy Demo ](https://drive.google.com/file/d/1I8BCLNk8bYaX0I3LNaomhgSklV6s_9zF/view?usp=drive_link)
 
-[▶️ Watch eBuy Demo Video](https://drive.google.com/file/d/1I8BCLNk8bYaX0I3LNaomhgSklV6s_9zF/view?usp=drive_link)
-
-This demo showcases:
-
-- User authentication flow
-- Product browsing and filtering
-- Shopping cart functionality
-- Checkout process with Stripe
-- Admin dashboard features
