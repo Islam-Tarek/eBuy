@@ -68,7 +68,7 @@ eBuy is an enterprise-grade e-commerce platform leveraging cutting-edge web tech
 
    ```bash
    # Start both frontend and backend
-   npm run dev
+   nx run-many --target=serve --projects=eBuy-frontend,eBuy-backend
 
    # Start frontend only
    npm run serve:frontend
@@ -89,33 +89,6 @@ ebuy/
 ├── dist/                 # Build output
 └── node_modules/         # Dependencies
 ```
-
-## Development Workflow
-
-Nx provides a comprehensive development toolkit that enables:
-
-### Core Commands
-
-```bash
-# Development Environment
-nx serve              # Launch development environment for all applications
-nx serve buy-frontend # Start frontend development server
-nx serve buy-backend  # Start backend development server
-
-# Build Pipeline
-nx build              # Create production builds for all applications
-nx affected:build     # Build only affected applications
-
-# Testing Suite
-nx test              # Execute unit tests across all applications
-nx affected:test     # Run tests for affected applications only
-```
-
-- `npm run dev` - Start both frontend and backend in development mode
-- `npm run serve:frontend` - Start frontend development server
-- `npm run serve:backend` - Start backend development server
-- `npm run build` - Build all applications
-- `npm run start` - Start all applications in production mode
 
 ## 🔒 Environment Variables
 
@@ -139,7 +112,7 @@ STRIPE_WEBHOOK_SECRET="your-stripe-webhook-secret"
 
 Watch our platform demonstration:
 
-[▶️ Watch eBuy Demo Video](https://drive.google.com/file/d/your-video-id/view)
+[▶️ Watch eBuy Demo Video](https://drive.google.com/file/d/1I8BCLNk8bYaX0I3LNaomhgSklV6s_9zF/view?usp=drive_link)
 
 This demo showcases:
 

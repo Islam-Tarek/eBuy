@@ -51,3 +51,5 @@ test-output
 .env
 
 service-account.json
+
+apps/eBuy-frontend/public/products/
